@@ -17,11 +17,11 @@ A simple and fun Rock-Paper-Scissors game built using HTML, CSS, and JavaScript.
 5. Sound effects play for win or loss.  
 6. Your balance updates after each round.  
 7. Click Replay to start a new game.
-8.  ## 🌐 Live Demo
+ ## 🌐 Live Demo
 
 👉 [Play the Game on Vercel](https://spsgame-chi.vercel.app/)
 ## 📸 Preview
+<img width="1907" height="973" alt="Screenshot 2025-07-14 222959" src="https://github.com/user-attachments/assets/9016909e-b5d2-41e3-a2c6-5f14847848c2" />
 
-![Game Preview](screenshot.png)
 
 Enjoy the game and test your luck! 🧠💥
