@@ -2,113 +2,51 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Cartoon RPS Bet Game</title>
-  <link rel="stylesheet" href="SPS.css" />
-  
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Rock Paper Scissors - Bet Game</h1>
+  <div class="game-wrapper">
+    <h1>Rock Paper Scissors</h1>
 
-  <div class="bet-container">
-    <span><strong>Balance:</strong> <span id="balance">1000</span> 💰</span>
-    <span><strong>Bet:</strong> <span id="bet">100</span> 💸</span>
-    <div class="adjust-buttons">
-      <button onclick="adjustBet(-50)">-</button>
-      <button onclick="adjustBet(50)">+</button>
+    <div class="bet-container">
+      <div class="badge">Balance: <span id="balance">1000</span> 💰</div>
+      <div class="badge">Bet: <span id="bet">100</span> 💸</div>
+      <div class="adjust-buttons">
+        <button onclick="adjustBet(-50)">−</button>
+        <button onclick="adjustBet(50)">+</button>
+      </div>
     </div>
-  </div>
 
-  <div class="game-area">
-    <button class="choice" onclick="play('rock')">🪨 Rock</button>
-    <button class="choice" onclick="play('paper')">📄 Paper</button>
-    <button class="choice" onclick="play('scissor')">✂️ Scissor</button>
-  </div>
+    <div class="scoreboard">
+      <div class="score-box">YOU<br><span id="userScore">0</span></div>
+      <div class="score-box">CPU<br><span id="compScore">0</span></div>
+    </div>
 
-  <div class="scoreboard">
-    <div class="score-box">YOU<br><span id="userScore">0</span></div>
-    <div class="score-box">CPU<br><span id="compScore">0</span></div>
-  </div>
+    <div class="hands-and-choices">
+      <div class="hands">
+        <img src="hand_rock.png" id="playerHand" alt="Your hand">
+        <img src="hand_rock.png" id="computerHand" alt="CPU hand">
+      </div>
+      <div class="choices">
+        <button class="choice" onclick="play('rock')">🪨 Rock</button>
+        <button class="choice" onclick="play('paper')">📄 Paper</button>
+        <button class="choice" onclick="play('scissor')">✂️ Scissor</button>
+      </div>
+    </div>
 
-  <div class="result-box" id="result">Let's play!</div>
+    <div class="result-box" id="result">Make your move!</div>
 
-  <div class="controls">
-    <button onclick="resetGame()">🔄 Reset</button>
-    <button onclick="toggleSound()" id="soundToggle">🔊 Sound On</button>
+    <div class="controls">
+      <button onclick="resetGame()">🔄 Reset</button>
+      <button onclick="toggleSound()" id="soundToggle">🔊 Sound On</button>
+    </div>
   </div>
 
   <audio id="winSound" src="win.mp3"></audio>
   <audio id="loseSound" src="lose.mp3"></audio>
 
-  <script>
-    let userScore = 0;
-    let compScore = 0;
-    let balance = 1000;
-    let betAmount = 100;
-    let soundOn = true;
-
-    function play(userChoice) {
-      const choices = ["rock", "paper", "scissor"];
-      const compChoice = choices[Math.floor(Math.random() * 3)];
-      const resultEl = document.getElementById("result");
-      const winSound = document.getElementById("winSound");
-      const loseSound = document.getElementById("loseSound");
-
-      if (balance < betAmount) {
-        resultEl.innerText = "Not enough balance!";
-        return;
-      }
-
-      let result = "";
-
-      if (userChoice === compChoice) {
-        result = `Draw! Both chose ${userChoice}`;
-      } else if (
-        (userChoice === "rock" && compChoice === "scissor") ||
-        (userChoice === "scissor" && compChoice === "paper") ||
-        (userChoice === "paper" && compChoice === "rock")
-      ) {
-        result = `You Win! ${userChoice} beats ${compChoice}`;
-        userScore++;
-        balance += betAmount;
-        if (soundOn) winSound.play();
-      } else {
-        result = `You Lose! ${compChoice} beats ${userChoice}`;
-        compScore++;
-        balance -= betAmount;
-        if (soundOn) loseSound.play();
-      }
-
-      document.getElementById("userScore").innerText = userScore;
-      document.getElementById("compScore").innerText = compScore;
-      document.getElementById("balance").innerText = balance;
-      document.getElementById("result").innerText = result;
-    }
-
-    function adjustBet(amount) {
-      let newBet = betAmount + amount;
-      if (newBet >= 50 && newBet <= balance) {
-        betAmount = newBet;
-        document.getElementById("bet").innerText = betAmount;
-      }
-    }
-
-    function resetGame() {
-      userScore = 0;
-      compScore = 0;
-      balance = 1000;
-      betAmount = 100;
-      document.getElementById("userScore").innerText = userScore;
-      document.getElementById("compScore").innerText = compScore;
-      document.getElementById("balance").innerText = balance;
-      document.getElementById("bet").innerText = betAmount;
-      document.getElementById("result").innerText = "Let's play!";
-    }
-
-    function toggleSound() {
-      soundOn = !soundOn;
-      document.getElementById("soundToggle").innerText = soundOn ? "🔊 Sound On" : "🔇 Sound Off";
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
