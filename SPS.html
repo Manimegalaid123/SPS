@@ -2,51 +2,69 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cartoon RPS Bet Game</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cartoon RPS Betting Game</title>
+ <link rel="stylesheet" href="SPS.css">
 </head>
 <body>
-  <div class="game-wrapper">
+ 
+  <button class="sound-toggle" onclick="toggleSound()" id="soundToggle">🔊</button>
+
+ 
+  <div class="cloud cloud1"></div>
+  <div class="cloud cloud2"></div>
+  <div class="cloud cloud3"></div>
+  
+ 
+  <div class="ground"></div>
+
+  <div class="game-container">
     <h1>Rock Paper Scissors</h1>
 
-    <div class="bet-container">
-      <div class="badge">Balance: <span id="balance">1000</span> 💰</div>
-      <div class="badge">Bet: <span id="bet">100</span> 💸</div>
-      <div class="adjust-buttons">
-        <button onclick="adjustBet(-50)">−</button>
-        <button onclick="adjustBet(50)">+</button>
+    <div class="betting-section">
+      <div class="stat-item">
+        <div class="stat-label">Balance</div>
+        <div class="stat-value">$<span id="balance">1000</span></div>
       </div>
+      
+      <div class="stat-item">
+        <div class="stat-label">Current Bet</div>
+        <div class="stat-value">$<span id="bet">100</span></div>
+      </div>
+      
+      <div class="bet-controls">
+        <button class="bet-button" onclick="adjustBet(-50)">-$50</button>
+        <button class="bet-button" onclick="adjustBet(50)">+$50</button>
+      </div>
+    </div>
+
+    <div class="game-choices">
+      <button class="choice-button" onclick="play('rock')">Rock</button>
+      <button class="choice-button" onclick="play('paper')">Paper</button>
+      <button class="choice-button" onclick="play('scissor')">Scissors</button>
     </div>
 
     <div class="scoreboard">
-      <div class="score-box">YOU<br><span id="userScore">0</span></div>
-      <div class="score-box">CPU<br><span id="compScore">0</span></div>
-    </div>
-
-    <div class="hands-and-choices">
-      <div class="hands">
-        <img src="hand_rock.png" id="playerHand" alt="Your hand">
-        <img src="hand_rock.png" id="computerHand" alt="CPU hand">
+      <div class="score-card">
+        <div class="score-label">Player</div>
+        <div class="score-value" id="userScore">0</div>
       </div>
-      <div class="choices">
-        <button class="choice" onclick="play('rock')">🪨 Rock</button>
-        <button class="choice" onclick="play('paper')">📄 Paper</button>
-        <button class="choice" onclick="play('scissor')">✂️ Scissor</button>
+      <div class="score-card">
+        <div class="score-label">Computer</div>
+        <div class="score-value" id="compScore">0</div>
       </div>
     </div>
 
-    <div class="result-box" id="result">Make your move!</div>
+    <div class="result-display" id="result">Ready to play? Choose your move!</div>
 
     <div class="controls">
-      <button onclick="resetGame()">🔄 Reset</button>
-      <button onclick="toggleSound()" id="soundToggle">🔊 Sound On</button>
+      <button class="control-button" onclick="resetGame()">Reset Game</button>
     </div>
   </div>
 
   <audio id="winSound" src="win.mp3"></audio>
   <audio id="loseSound" src="lose.mp3"></audio>
-
-  <script src="script.js"></script>
+<script src="SPS.js"></script>   
+  
 </body>
 </html>

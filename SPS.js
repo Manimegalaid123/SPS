@@ -1,84 +1,79 @@
-let userScore = 0, compScore = 0;
-let balance = 1000, betAmount = 100;
-let soundOn = true;
 
-const uScoreEl = document.getElementById("userScore");
-const cScoreEl = document.getElementById("compScore");
-const balanceEl = document.getElementById("balance");
-const betEl = document.getElementById("bet");
-const resultEl = document.getElementById("result");
-const playerHand = document.getElementById("playerHand");
-const computerHand = document.getElementById("computerHand");
-const winSound = document.getElementById("winSound");
-const loseSound = document.getElementById("loseSound");
-const soundToggle = document.getElementById("soundToggle");
+    let userScore = 0;
+    let compScore = 0;
+    let balance = 1000;
+    let betAmount = 100;
+    let soundOn = true;
 
-function play(choice) {
-  if (balance < betAmount) {
-    resultEl.innerText = "Not enough balance!";
-    return;
-  }
+    function play(userChoice) {
+      const choices = ["rock", "paper", "scissor"];
+      const compChoice = choices[Math.floor(Math.random() * 3)];
+      const resultEl = document.getElementById("result");
+      const winSound = document.getElementById("winSound");
+      const loseSound = document.getElementById("loseSound");
 
-  const choices = ["rock", "paper", "scissor"];
-  const comp = choices[Math.floor(Math.random() * 3)];
+      if (balance < betAmount) {
+        resultEl.innerText = "Insufficient balance! Please reduce your bet.";
+        resultEl.className = "result-display lose";
+        return;
+      }
 
-  playerHand.src = `hand_${choice}.png`;
-  computerHand.src = `hand_${comp}.png`;
+      let result = "";
+      let resultClass = "";
 
-  let outcome;
-  if (choice === comp) {
-    outcome = "draw";
-  } else if (
-    (choice === "rock" && comp === "scissor") ||
-    (choice === "paper" && comp === "rock") ||
-    (choice === "scissor" && comp === "paper")
-  ) {
-    outcome = "win";
-  } else {
-    outcome = "lose";
-  }
+      if (userChoice === compChoice) {
+        result = `Draw! Both chose ${userChoice.charAt(0).toUpperCase() + userChoice.slice(1)}`;
+        resultClass = "draw";
+      } else if (
+        (userChoice === "rock" && compChoice === "scissor") ||
+        (userChoice === "scissor" && compChoice === "paper") ||
+        (userChoice === "paper" && compChoice === "rock")
+      ) {
+        result = `You Win! ${userChoice.charAt(0).toUpperCase() + userChoice.slice(1)} beats ${compChoice.charAt(0).toUpperCase() + compChoice.slice(1)}`;
+        userScore++;
+        balance += betAmount;
+        resultClass = "win";
+        if (soundOn) winSound.play();
+      } else {
+        result = `You Lose! ${compChoice.charAt(0).toUpperCase() + compChoice.slice(1)} beats ${userChoice.charAt(0).toUpperCase() + userChoice.slice(1)}`;
+        compScore++;
+        balance -= betAmount;
+        resultClass = "lose";
+        if (soundOn) loseSound.play();
+      }
 
-  updateOutcome(outcome, choice, comp);
-}
+      document.getElementById("userScore").innerText = userScore;
+      document.getElementById("compScore").innerText = compScore;
+      document.getElementById("balance").innerText = balance;
+      document.getElementById("result").innerText = result;
+      document.getElementById("result").className = `result-display ${resultClass}`;
+    }
 
-function updateOutcome(outcome, choice, comp) {
-  if (outcome === "win") {
-    userScore++; balance += betAmount;
-    if (soundOn) winSound.play();
-    resultEl.innerText = `You Win! ${choice} beats ${comp}`;
-  } else if (outcome === "lose") {
-    compScore++; balance -= betAmount;
-    if (soundOn) loseSound.play();
-    resultEl.innerText = `You Lose! ${comp} beats ${choice}`;
-  } else {
-    resultEl.innerText = `Draw! Both chose ${choice}`;
-  }
+    function adjustBet(amount) {
+      let newBet = betAmount + amount;
+      if (newBet >= 50 && newBet <= balance) {
+        betAmount = newBet;
+        document.getElementById("bet").innerText = betAmount;
+      }
+    }
 
-  uScoreEl.innerText = userScore;
-  cScoreEl.innerText = compScore;
-  balanceEl.innerText = balance;
-}
+    function resetGame() {
+      userScore = 0;
+      compScore = 0;
+      balance = 1000;
+      betAmount = 100;
+      document.getElementById("userScore").innerText = userScore;
+      document.getElementById("compScore").innerText = compScore;
+      document.getElementById("balance").innerText = balance;
+      document.getElementById("bet").innerText = betAmount;
+      document.getElementById("result").innerText = "Ready to play? Choose your move!";
+      document.getElementById("result").className = "result-display";
+    }
 
-function adjustBet(amt) {
-  const newBet = betAmount + amt;
-  if (newBet >= 50 && newBet <= balance) {
-    betAmount = newBet;
-    betEl.innerText = betAmount;
-  }
-}
-
-function resetGame() {
-  userScore = compScore = 0;
-  balance = 1000; betAmount = 100;
-  uScoreEl.innerText = userScore;
-  cScoreEl.innerText = compScore;
-  balanceEl.innerText = balance;
-  betEl.innerText = betAmount;
-  resultEl.innerText = "Make your move!";
-  playerHand.src = computerHand.src = "hand_rock.png";
-}
-
-function toggleSound() {
-  soundOn = !soundOn;
-  soundToggle.innerText = soundOn ? "🔊 Sound On" : "🔇 Sound Off";
-}
+    function toggleSound() {
+      soundOn = !soundOn;
+      const soundToggle = document.getElementById("soundToggle");
+      soundToggle.innerHTML = soundOn ? "🔊" : "🔇";
+      soundToggle.className = soundOn ? "sound-toggle" : "sound-toggle sound-off";
+    }
+ 
